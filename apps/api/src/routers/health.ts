@@ -1,12 +1,18 @@
-import express, { Response, Request } from "express";
+import { publicProcedure, router } from "../utils/createContext";
 import { APIResponseHealth } from "@brewdb/types";
+import { isAuthed } from "../middleware/auth";
 
-const healthRouter = express.Router();
+const protectedProcedure = publicProcedure.use(isAuthed);
 
-const getHealth = async (req: Request, res: Response<APIResponseHealth>) => {
-  res.status(200).send({ status: "success", message: "Up", data: {} });
-};
-
-healthRouter.get("/health", getHealth);
-
-export default healthRouter;
+export const healthRouter = router({
+  health: publicProcedure.query<APIResponseHealth>(() => ({
+    status: "success",
+    message: "Server is up",
+    data: {},
+  })),
+  "protected-health": protectedProcedure.query<APIResponseHealth>(() => ({
+    status: "success",
+    message: "Server is up",
+    data: {},
+  })),
+});

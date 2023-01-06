@@ -1,18 +1,41 @@
-import express, { Response, Request } from "express";
-import * as breweriesController from "../controllers/breweriesController";
+import { BreweryType } from "@prisma/client";
+import { z } from "zod";
+import { prisma } from "../utils";
+import { publicProcedure, router } from "../utils/createContext";
 
-const breweriesRouter = express.Router();
+export const breweriesRouter = router({
+  breweries: publicProcedure
+    .input(
+      z.object({
+        take: z.number().default(10),
+        cursor: z.string().optional(),
+        skip: z.number().default(1),
+        name: z.string().optional(),
+        country: z.string().optional(),
+        region: z.string().optional(),
+        type: z.nativeEnum(BreweryType).optional(),
+      })
+    )
+    .query(async ({ input }) => {
+      const { take, cursor, skip, name, country, region, type } = input;
+      console.log({ take, cursor, skip, name, country, region, type });
 
-const listBreweries = async (req: Request, res: Response) => {
-  try {
-    const breweries = await breweriesController.listBreweries();
+      const breweries = await prisma.brewery.findMany({
+        take,
+        cursor: cursor ? { id: cursor } : undefined,
+        skip,
+      });
 
-    res.status(200).send(breweries);
-  } catch (error) {
-    res.status(400).send("error");
-  }
-};
+      return breweries;
+    }),
+  byId: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ input }) => {
+      const { id } = input;
+      console.log({ id });
 
-breweriesRouter.get("/breweries", listBreweries);
+      const brewery = await prisma.brewery.findUniqueOrThrow({ where: { id } });
 
-export default breweriesRouter;
+      return brewery;
+    }),
+});
