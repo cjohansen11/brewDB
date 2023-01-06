@@ -8,11 +8,12 @@ export const createContext = ({
   res,
 }: trpcExpress.CreateExpressContextOptions) => ({});
 
-type Context = {
-  user?: {
-    id: string;
-  };
-};
+// type Context = {
+//   user?: {
+//     id: string;
+//   };
+// };
+type Context = inferAsyncReturnType<typeof createContext>;
 
 const t = initTRPC.context<Context>().create({
   transformer: superjson,

@@ -4,7 +4,7 @@ import { prisma } from "../utils";
 import { publicProcedure, router } from "../utils/createContext";
 
 export const breweriesRouter = router({
-  breweries: publicProcedure
+  list: publicProcedure
     .input(
       z.object({
         take: z.number().default(10),
@@ -18,7 +18,6 @@ export const breweriesRouter = router({
     )
     .query(async ({ input }) => {
       const { take, cursor, skip, name, country, region, type } = input;
-      console.log({ take, cursor, skip, name, country, region, type });
 
       const breweries = await prisma.brewery.findMany({
         take,
