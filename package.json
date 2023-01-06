@@ -1,0 +1,27 @@
+{
+  "name": "brewdb",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "api:build": "yarn workspace @brewdb/api build",
+    "api:dev": "yarn workspace @brewdb/api dev",
+    "prisma:generate": "yarn workspace @brewdb/prisma generate",
+    "prisma:migrate:deploy": "yarn workspace @brewdb/prisma migrate:deploy",
+    "prisma:migrate:dev": "yarn workspace @brewdb/prisma migrate:dev",
+    "prisma:deploy": "prisma migrate dev --schema ./packages/prisma/schema.prisma",
+    "prisma:migrate:reset": "yarn workspace @bash/prisma migrate:reset",
+    "prisma:db:seed": "yarn workspace @brewdb/prisma db:seed"
+  },
+  "devDependencies": {
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.8.1"
+  }
+}

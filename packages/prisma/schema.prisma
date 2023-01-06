@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  favorites Brewery[]
+}
+
+model Brewery {
+  id              String      @id @default(uuid())
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @default(now())
+  name            String
+  brewery_type    BreweryType
+  street          String
+  address2        String?
+  address3        String?
+  city            String
+  state           String?
+  county_province String?
+  postal_code     String
+  website         String?
+  country         String
+  longitude       String
+  latitude        String
+  phone           String?
+  favorited       User[]
+}
+
+enum BreweryType {
+  micro
+  nano
+  regional
+  brewpub
+  large
+  planning
+  bar
+  contract
+  proprietor
+  closed
+  taproom
+}

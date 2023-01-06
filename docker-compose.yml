@@ -1,0 +1,47 @@
+version: "3.9"
+services:
+  postgres:
+    container_name: brewdb_postgres
+    environment:
+      POSTGRES_DB: template0
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    image: postgres:13
+    restart: always
+
+  node_api:
+    container_name: brewdb_api
+    image: node:18
+    depends_on:
+      - postgres
+    working_dir: "/opt/app/"
+    entrypoint: ["./apps/api/entrypoint.sh"]
+    links:
+      - postgres
+    volumes:
+      - .:/opt/app/
+      - /opt/app/apps/api/node_modules/
+      - /opt/app/node_modules/
+    ports:
+      - 3001:3000
+    env_file:
+      - ./apps/api/.env
+    environment:
+      DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/brewdb?schema=public"
+
+  prisma_studio:
+    container_name: brewdb_prisma_studio
+    build:
+      context: ./packages/prisma
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/brewdb?schema=public"
+    links:
+      - postgres
+    volumes:
+      - ./packages/prisma:/prisma
+    working_dir: /prisma
+    ports:
+      - 5555:5555
