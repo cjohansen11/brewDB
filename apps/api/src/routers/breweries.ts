@@ -1,43 +1,65 @@
-import { BreweryType } from "@prisma/client";
-import { z } from "zod";
-import { prisma } from "../utils";
-import { publicProcedure, router } from "../utils/createContext";
+import {
+  APIResponseBreweriesList,
+  QueryBreweriesList,
+  RouteBreweries,
+  APIResponseBreweryGet,
+} from "@brewdb/types";
+import express, { Request, Response } from "express";
+import * as breweriesController from "../controllers/breweriesController";
+import { getErrorMessage } from "../utils";
 
-export const breweriesRouter = router({
-  list: publicProcedure
-    .input(
-      z.object({
-        take: z.number().default(10),
-        cursor: z.string().optional(),
-        skip: z.number().default(1),
-        name: z.string().optional(),
-        country: z.string().optional(),
-        region: z.string().optional(),
-        type: z.nativeEnum(BreweryType).optional(),
-      })
-    )
-    .query(async ({ input }) => {
-      const { take, cursor, skip, name, country, region, type } = input;
+const breweriesRouter = express.Router();
 
-      const breweries = await prisma.brewery.findMany({
-        take,
-        cursor: cursor ? { id: cursor } : undefined,
-        skip,
-        where: {
-          brewery_type: type,
-        },
-      });
+const listBreweries = async (
+  req: Request<
+    Record<string, unknown>,
+    Record<string, unknown>,
+    Record<string, unknown>,
+    QueryBreweriesList
+  >,
+  res: Response<APIResponseBreweriesList>
+) => {
+  try {
+    const { query } = req;
 
-      return breweries;
-    }),
-  byId: publicProcedure
-    .input(z.object({ id: z.string() }))
-    .query(async ({ input }) => {
-      const { id } = input;
-      console.log({ id });
+    const breweries = await breweriesController.listBreweries(query);
 
-      const brewery = await prisma.brewery.findUniqueOrThrow({ where: { id } });
+    res.status(200).send({
+      status: "success",
+      message: "Successfully fetched breweries",
+      data: breweries,
+    });
+  } catch (error) {
+    res.status(400).send({
+      status: "error",
+      message: `Failed to fetch breweries: ${getErrorMessage(error)}`,
+    });
+  }
+};
 
-      return brewery;
-    }),
-});
+const getBrewery = async (
+  req: Request<{ breweryId: string }>,
+  res: Response<APIResponseBreweryGet>
+) => {
+  const { breweryId } = req.params;
+  try {
+    console.log({ breweryId });
+    const brewery = await breweriesController.getBreweryById(breweryId);
+
+    res.status(200).send({
+      status: "success",
+      message: "Successfully fetched brewery",
+      data: brewery,
+    });
+  } catch (error) {
+    res.status(400).send({
+      status: "error",
+      message: `Failed to fetch brewery: ${breweryId}`,
+    });
+  }
+};
+
+breweriesRouter.get(RouteBreweries.ROOT, listBreweries);
+breweriesRouter.get(`${RouteBreweries.ROOT}/:breweryId`, getBrewery);
+
+export default breweriesRouter;

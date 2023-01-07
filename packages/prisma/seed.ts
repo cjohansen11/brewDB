@@ -22,15 +22,16 @@ async function runSeed() {
         phone,
         longitude,
         latitude,
+        obdb_id,
       }) => {
         try {
-          // const id = randomUUID()
           await prisma.brewery.upsert({
             where: {
-              id: randomUUID(),
+              id: obdb_id,
             },
             update: {},
             create: {
+              id: obdb_id,
               name,
               // Forced to typecast here due to the JSON file submitting this field as a plain string
               brewery_type: brewery_type as BreweryType,

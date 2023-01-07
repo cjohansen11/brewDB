@@ -1,8 +1,11 @@
-import { router } from "../utils/createContext";
-import { breweriesRouter } from "./breweries";
-import { healthRouter } from "./health";
+import { Application } from "express";
 
-export const appRouter = router({
-  health: healthRouter,
-  breweries: breweriesRouter,
-});
+import healthRouter from "./health";
+import breweriesRouter from "./breweries";
+
+export default function initializeRoutes(app: Application) {
+  app.use(healthRouter);
+  app.use(breweriesRouter);
+}
+
+export { healthRouter, breweriesRouter };

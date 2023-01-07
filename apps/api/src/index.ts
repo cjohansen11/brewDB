@@ -1,24 +1,15 @@
 import express, { Application } from "express";
-import * as trpcExpress from "@trpc/server/adapters/express";
-import { createContext } from "./utils/createContext";
-import { appRouter } from "./routers";
 import cors from "cors";
 import morgan from "morgan";
-
-export type AppRouter = typeof appRouter;
+import initializeRoutes from "./routers";
 
 const app: Application = express();
 
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(morgan("dev"));
+app.use(express.json());
+app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
 
-app.use(
-  "/trpc",
-  trpcExpress.createExpressMiddleware({
-    router: appRouter,
-    createContext,
-  })
-);
+initializeRoutes(app);
 
 app.listen(3000, function () {
   console.info("listening on port 3000");

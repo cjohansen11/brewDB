@@ -1,3 +1,4 @@
 import prisma from "./prismaClient";
+import getErrorMessage from "./getErrorMessage";
 
-export { prisma };
+export { getErrorMessage, prisma };

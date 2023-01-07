@@ -15,7 +15,7 @@
     "prisma:migrate:deploy": "yarn workspace @brewdb/prisma migrate:deploy",
     "prisma:migrate:dev": "yarn workspace @brewdb/prisma migrate:dev",
     "prisma:deploy": "prisma migrate dev --schema ./packages/prisma/schema.prisma",
-    "prisma:migrate:reset": "yarn workspace @bash/prisma migrate:reset",
+    "prisma:migrate:reset": "yarn workspace @brewdb/prisma migrate:reset",
     "prisma:db:seed": "yarn workspace @brewdb/prisma db:seed",
     "dev": "cd apps/next && yarn next"
   },
