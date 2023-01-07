@@ -23,6 +23,9 @@ export const breweriesRouter = router({
         take,
         cursor: cursor ? { id: cursor } : undefined,
         skip,
+        where: {
+          brewery_type: type,
+        },
       });
 
       return breweries;

@@ -1,11 +1,22 @@
+import { BreweryType } from "@prisma/client";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { trpc } from "../utils/trpc";
+import { useForm, Controller } from "react-hook-form";
 
 export default function Home() {
+  const {
+    control,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  console.log(watch());
+
   const { data: breweries, isError } = trpc.breweries.list.useQuery({
     take: 25,
+    type: !!watch("type") ? watch("type") : undefined,
   });
 
   return (
@@ -23,19 +34,61 @@ export default function Home() {
             flexDirection: "column",
           }}
         >
+          <Controller
+            control={control}
+            name="type"
+            render={({ field }) => (
+              <>
+                <label htmlFor="brewery-type">Select a type:</label>
+                <select
+                  id="brewery-type"
+                  name="type"
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
+                  value={field.value}
+                >
+                  <option value="">Select an option</option>
+                  {Object.values(BreweryType).map((type) => (
+                    <option value={type}>{type}</option>
+                  ))}
+                </select>
+                <label htmlFor="brewery-country">Select a country</label>
+                <Controller control={control} name="country" render={({field}) => (
+                  <select id="brewery-country" name="country" onChange={field.onChange} onBlur={field.onBlur} value={field.value}>Select a country</select>
+                  <option value="">Select a country</option>
+                  
+                )} />
+              </>
+            )}
+          />
           {breweries &&
-            breweries.map(({ name, website }) => (
-              <div style={{ padding: 4 }}>
-                <p>{name}</p>
-                {website ? (
-                  <a href={website} target={"_blank"}>
-                    {website}
-                  </a>
-                ) : (
-                  <p style={{ color: "red" }}>No website available</p>
-                )}
-              </div>
-            ))}
+            breweries.map(
+              ({
+                name,
+                website,
+                brewery_type,
+                street,
+                city,
+                state,
+                county_province,
+                postal_code,
+              }) => (
+                <div style={{ padding: 4 }}>
+                  <p>{name}</p>
+                  <p>{brewery_type}</p>
+                  {website ? (
+                    <a href={website} target={"_blank"}>
+                      {website}
+                    </a>
+                  ) : (
+                    <p style={{ color: "red" }}>No website available</p>
+                  )}
+                  <p>{`${street} ${city}, ${state ?? county_province} ${
+                    postal_code.split("-")[0]
+                  }`}</p>
+                </div>
+              )
+            )}
         </div>
       </main>
     </>
