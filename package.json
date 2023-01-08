@@ -4,7 +4,7 @@
     "apps/*",
     "packages/*"
   ],
-  "version": "1.0.0",
+  "version": "0.0.0",
   "main": "index.js",
   "license": "MIT",
   "private": true,
@@ -17,7 +17,7 @@
     "prisma:deploy": "prisma migrate dev --schema ./packages/prisma/schema.prisma",
     "prisma:migrate:reset": "yarn workspace prisma migrate:reset",
     "prisma:db:seed": "yarn workspace prisma db:seed",
-    "dev": "cd apps/next && yarn next"
+    "dev": "cd apps/next-app && yarn next"
   },
   "devDependencies": {
     "typescript": "^4.9.4"
