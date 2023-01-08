@@ -1,9 +1,13 @@
 import "../styles/globals.css";
-import type { AppProps, AppType } from "next/app";
-import { trpc } from "../utils/trpc";
+import type { AppProps } from "next/app";
+import { QueryClient, QueryClientProvider } from "react-query";
 
-const BrewDB: AppType = ({ Component, pageProps }: AppProps) => {
-  return <Component {...pageProps} />;
-};
+export default function App({ Component, pageProps }: AppProps) {
+  const queryClient = new QueryClient();
 
-export default trpc.withTRPC(BrewDB);
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Component {...pageProps} />;
+    </QueryClientProvider>
+  );
+}

@@ -13,7 +13,7 @@
     "strictNullChecks": true,
     "noUncheckedIndexedAccess": true,
     "paths": {
-      "@brewdb/client": ["./packages/app/*"]
+      "client": ["./packages/app/*"]
     },
     "module": "esnext"
   },

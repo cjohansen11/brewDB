@@ -1,5 +1,5 @@
 {
-  "name": "@brewdb/api",
+  "name": "api",
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
@@ -8,6 +8,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "types": "*",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "morgan": "^1.10.0",

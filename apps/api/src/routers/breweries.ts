@@ -3,7 +3,7 @@ import {
   QueryBreweriesList,
   RouteBreweries,
   APIResponseBreweryGet,
-} from "@brewdb/types";
+} from "types";
 import express, { Request, Response } from "express";
 import * as breweriesController from "../controllers/breweriesController";
 import { getErrorMessage } from "../utils";

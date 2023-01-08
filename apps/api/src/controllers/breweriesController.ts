@@ -1,4 +1,4 @@
-import { QueryBreweriesList } from "@brewdb/types";
+import { QueryBreweriesList } from "types";
 import { prisma } from "../utils";
 
 /**

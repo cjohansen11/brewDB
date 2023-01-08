@@ -1,5 +1,5 @@
 import express, { Response, Request } from "express";
-import { APIResponseHealth, RouteHealth } from "@brewdb/types";
+import { APIResponseHealth, RouteHealth } from "types";
 
 const healthRouter = express.Router();
 

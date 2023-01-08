@@ -1,5 +1,5 @@
 {
-  "name": "@brewdb/prisma",
+  "name": "prisma",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
