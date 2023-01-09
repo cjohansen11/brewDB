@@ -6,4 +6,3 @@ yarn-error.log
 .DS_Store
 packages/prisma/libquery_engine-linux-arm64-openssl-1.1.x.so.node
 packages/prisma/libquery_engine-darwin-arm64.dylib.node
-.turbo

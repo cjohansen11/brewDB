@@ -8,7 +8,7 @@ export type GoogleMapProps = {
   zoom?: number;
 };
 
-const Marker = ({ text }) => (
+const Marker = () => (
   <div className="bg-orange w-20 h-20 rounded-full opacity-50"></div>
 );
 
@@ -21,11 +21,13 @@ export default function GoogleMap({
   return (
     <div className="h-full w-full">
       <GoogleMapReact
-        bootstrapURLKeys={{ key: process.env.NEXT_PUBLIC_GOOGLE_API_KEY }}
+        bootstrapURLKeys={{
+          key: process.env.NEXT_PUBLIC_GOOGLE_API_KEY as string,
+        }}
         defaultCenter={{ lat, lng }}
         defaultZoom={zoom}
       >
-        <Marker text={name} />
+        <Marker />
       </GoogleMapReact>
     </div>
   );

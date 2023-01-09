@@ -13,6 +13,7 @@ const Home: NextPage = () => {
     data: breweries,
     isError,
     isLoading,
+    failureCount,
     fetchNextPage,
     hasNextPage,
   } = useBreweryList({
@@ -23,8 +24,12 @@ const Home: NextPage = () => {
     country: watch("country"),
     options: {},
   });
-  console.log({ breweries });
-  useInfiniteScroll({ callback: fetchNextPage });
+  console.log({ isError, isLoading, breweries, failureCount });
+  useInfiniteScroll({
+    callback: fetchNextPage,
+    offsetHeight: 100,
+    hasNextPage: !!hasNextPage,
+  });
 
   return (
     <div ref={listRef}>
@@ -99,18 +104,23 @@ const Home: NextPage = () => {
           )}
         />
       </div>
+      <div>
+        {breweries ? (
+          <BreweryList breweries={breweries} />
+        ) : (
+          <div className="flex flex-col text-center pt-12">
+            <div className="text-5xl text-orange pb-8">No breweries found</div>
+            <div className="text-2xl">
+              Adjust your filters to try again or refresh
+            </div>
+          </div>
+        )}
+      </div>
       {isLoading ? (
         <div className="flex h-screen justify-center content-center pt-8">
           <div className="text-white">Loading...</div>
         </div>
       ) : null}
-      <div>
-        {breweries && !isError ? (
-          <BreweryList breweries={breweries} />
-        ) : (
-          <ErrorScreen />
-        )}
-      </div>
     </div>
   );
 };

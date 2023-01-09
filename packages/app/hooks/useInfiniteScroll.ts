@@ -2,14 +2,31 @@ import { useEffect, useState, MutableRefObject } from "react";
 
 export type UseInifiteScrollProps = {
   callback: () => void;
+  offsetHeight: number;
+  hasNextPage: boolean;
 };
 
-export default function useInfiniteScroll({ callback }: UseInifiteScrollProps) {
+export default function useInfiniteScroll({
+  callback,
+  offsetHeight,
+  hasNextPage,
+}: UseInifiteScrollProps) {
   const [isFetching, setIsFetching] = useState(false);
+
+  const handleScroll = async () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight;
+    const clientHeight = document.documentElement.clientHeight;
+
+    if (scrollTop + clientHeight + offsetHeight >= scrollHeight) {
+      console.log("setting fetch");
+      setIsFetching(true);
+    }
+  };
 
   useEffect(() => {
     const handleFetch = async () => {
-      if (!isFetching) {
+      if (isFetching && hasNextPage) {
         await callback();
         setIsFetching(false);
       }
@@ -21,13 +38,4 @@ export default function useInfiniteScroll({ callback }: UseInifiteScrollProps) {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isFetching, setIsFetching]);
-
-  const handleScroll = async () => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop !==
-      document.documentElement.offsetHeight
-    ) {
-      setIsFetching(true);
-    }
-  };
 }
