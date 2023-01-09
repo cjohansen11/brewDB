@@ -4,9 +4,22 @@ A full stack application to display breweries around the world.
 
 ## Installation
 
-- Clone repo `git clone` https: `https://github.com/cjohansen11/brewDB.git` ssh: `git@github.com:cjohansen11/brewDB.git`
+- Clone repo:
+
+##### HTTPS:
+
+```bash
+    git clone https://github.com/cjohansen11/brewDB.git
+```
+
+##### SSH:
+
+```bash
+    git clone git@github.com:cjohansen11/brewDB.git
+```
+
 - Start Docker either with the Application or CLI - [Install Docker](https://docs.docker.com/desktop/)
-- `cd` into the brewDB directory
+- Navigate into the brewDB directory `cd brewDB`
 - Install dependencies `yarn`
 - To start API run:
 
