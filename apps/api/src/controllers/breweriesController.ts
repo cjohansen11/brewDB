@@ -39,8 +39,6 @@ export const listBreweries = async ({
     },
   });
 
-  if (breweries.length === 0) throw new Error("No breweries found");
-
   return breweries;
 };
 

@@ -11,12 +11,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        String    @id @default(uuid())
-  email     String    @unique
-  favorites Brewery[]
-}
-
 model Brewery {
   id              String      @id @default(uuid())
   createdAt       DateTime    @default(now())
@@ -35,7 +29,6 @@ model Brewery {
   longitude       String
   latitude        String
   phone           String?
-  favorited       User[]
 }
 
 enum BreweryType {

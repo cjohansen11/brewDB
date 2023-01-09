@@ -26,7 +26,12 @@ export default function BreweryCard({
       <div className="flex flex-row gap-2">
         Website:
         {website ? (
-          <a className="hover:underline" href={website} target={"_blank"}>
+          <a
+            className="hover:underline"
+            href={website}
+            onClick={(e) => e.stopPropagation()}
+            target={"_blank"}
+          >
             {name}
           </a>
         ) : (
