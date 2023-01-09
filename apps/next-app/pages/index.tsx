@@ -8,15 +8,11 @@ import { BreweryList, Loading } from "client/components";
 import { BreweryType } from "@prisma/client";
 import { useForm, Controller } from "react-hook-form";
 import { useRef } from "react";
+import { FilterFormType } from "types";
 
 const Home: NextPage = () => {
   const listRef = useRef<HTMLDivElement | null>(null);
-  const { control, watch } = useForm<{
-    type?: BreweryType;
-    name?: string;
-    region?: string;
-    country?: string;
-  }>();
+  const { control, watch } = useForm<FilterFormType>();
 
   const {
     data: breweries,
