@@ -7,14 +7,16 @@ export default function useBrewery({
   options,
 }: {
   id?: string;
-  options?: UseQueryOptions<Brewery>;
+  options?: UseQueryOptions<
+    Brewery,
+    unknown,
+    Brewery,
+    Array<string | undefined>
+  >;
 }) {
   return useQuery(
-    ["fetch-brewery", id],
-    () => api.breweries.fetchBrewery({ id }),
-    {
-      ...options,
-      staleTime: Infinity,
-    }
+    ["read-brewery", id],
+    () => api.breweries.fetchBrewery(id),
+    options
   );
 }

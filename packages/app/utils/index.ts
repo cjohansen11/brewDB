@@ -1,3 +1,4 @@
 import api from "./api";
+import getErrorMessage from "./getErrorMessage";
 
-export { api };
+export { api, getErrorMessage };

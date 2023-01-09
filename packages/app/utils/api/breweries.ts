@@ -1,3 +1,4 @@
+import { getErrorMessage } from "client/utils";
 import {
   APIResponseBreweriesList,
   APIResponseBreweryGet,
@@ -17,11 +18,11 @@ export const listBreweries = async (queryParams: QueryBreweriesList) => {
 
     return data.data;
   } catch (error) {
-    throw new Error(error);
+    throw new Error(getErrorMessage(error));
   }
 };
 
-export const fetchBrewery = async ({ id }: { id?: string }) => {
+export const fetchBrewery = async (id?: string) => {
   try {
     const { data } = await brewDBInstance.get<APIResponseBreweryGet>(
       `${RouteBreweries.ROOT}/${id}`
@@ -31,6 +32,6 @@ export const fetchBrewery = async ({ id }: { id?: string }) => {
 
     return data.data;
   } catch (error) {
-    throw new Error(error);
+    throw new Error(getErrorMessage(error));
   }
 };

@@ -1,7 +1,7 @@
 import { api } from "../utils";
 import { QueryBreweriesList } from "types";
 import { UseInfiniteQueryOptions, useInfiniteQuery } from "react-query";
-import { Brewery } from "@prisma/client";
+import { Brewery, BreweryType } from "@prisma/client";
 
 export default function useBreweryList({
   take,
@@ -11,7 +11,13 @@ export default function useBreweryList({
   type,
   options,
 }: Pick<QueryBreweriesList, "take" | "name" | "country" | "region" | "type"> & {
-  options?: UseInfiniteQueryOptions<Brewery[]>;
+  options: UseInfiniteQueryOptions<
+    Brewery[],
+    unknown,
+    Brewery[],
+    Brewery[],
+    Array<any>
+  >;
 }) {
   return useInfiniteQuery(
     ["list-breweries", take, name, country, region, type],
