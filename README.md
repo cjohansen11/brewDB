@@ -5,7 +5,7 @@ A full stack application to display breweries around the world.
 ## Installation
 
 - Clone this locally
-- Verify Docker is running locally
+- Start Docker either with the Application or CLI (https://docs.docker.com/desktop/)
 - `cd` into the brewDB directory
 - Run:
 
