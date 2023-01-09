@@ -1,5 +1,6 @@
 import {
   APIResponseBreweriesList,
+  APIResponseBreweryGet,
   QueryBreweriesList,
   RouteBreweries,
 } from "types";
@@ -10,6 +11,20 @@ export const listBreweries = async (queryParams: QueryBreweriesList) => {
     const { data } = await brewDBInstance.get<APIResponseBreweriesList>(
       RouteBreweries.ROOT,
       { params: queryParams }
+    );
+
+    if (data.status === "error") throw new Error(data.message);
+
+    return data.data;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export const fetchBrewery = async ({ id }: { id?: string }) => {
+  try {
+    const { data } = await brewDBInstance.get<APIResponseBreweryGet>(
+      `${RouteBreweries.ROOT}/${id}`
     );
 
     if (data.status === "error") throw new Error(data.message);

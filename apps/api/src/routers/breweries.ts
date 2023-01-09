@@ -43,7 +43,6 @@ const getBrewery = async (
 ) => {
   const { breweryId } = req.params;
   try {
-    console.log({ breweryId });
     const brewery = await breweriesController.getBreweryById(breweryId);
 
     res.status(200).send({
