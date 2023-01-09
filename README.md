@@ -21,6 +21,8 @@ A full stack application to display breweries around the world.
 - Start Docker either with the Application or CLI - [Install Docker](https://docs.docker.com/desktop/)
 - Navigate into the brewDB directory `cd brewDB`
 - Install dependencies `yarn`
+- Create server `.env`
+- Create `env` files - See Environmental Variables section below
 - To start API run:
 
 ```bash
@@ -35,6 +37,30 @@ A full stack application to display breweries around the world.
 ```
 
 - Navigate to `localhost:3000`
+
+## Environmental Variables
+
+- Duplicate `apps/api/.example.env` and rename `.env`
+- Duplicate `apps/next-app/.example.env.local` and rename `.env.local`
+
+### Node Variables
+
+To run this project, you will need to add the following environment variables to your `apps/api/.env` file
+
+```javascript
+    CORS_ORIGIN=http://localhost:3000
+```
+
+### NextJS Variables
+
+To run this project, you will need to add the following environment variables to your `apps/next-app/.env.local` file
+
+To generate the Google API Key go to [Create Google API Key](https://developers.google.com/maps/documentation/javascript/get-api-key)
+
+```javascript
+    NEXT_PUBLIC_API=http://localhost:3001
+    NEXT_PUBLIC_GOOGLE_API_KEY=
+```
 
 ## API - Postman
 

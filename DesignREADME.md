@@ -1,4 +1,4 @@
-# BrewDB with tRPC, Next.js, and Prisma
+# BrewDB with Next.js, Node and Prisma
 
 ## Technologies
 
@@ -6,9 +6,8 @@
 - Next.js
 - Prisma (postgres)
 - Zod
-- CSS Extention options - PostCSS, Stylus
-- Google Map React?
-- User auth? Paseto or JWT
+- CSS Extention options - PostCSS, Stylus, Tailwindcss
+- Google Map React
 
 ## Features
 
@@ -25,7 +24,7 @@
 
 ## Server Design
 
-- Node.js, Express, Prisma (postgres) and tRPC
+- Node.js, Express and Prisma (postgres)
 
 ### Routes
 
@@ -36,12 +35,6 @@
   - Filters: name, country, state/county_province
 - `/:id`: Get brewery by ID
 
-#### /auth
+#### /health
 
-- `/login`: Login and authenticate
-- `/logout`: Logout
-- `/refresh-token`: Refresh token during session
-
-#### /user
-
-- `/me`: Authenticated route - Fetch user detail information including email and favorites
+- `/`: Basic server status
