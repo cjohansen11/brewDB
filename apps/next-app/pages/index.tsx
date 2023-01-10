@@ -20,7 +20,7 @@ const Home: NextPage = () => {
     fetchNextPage,
     hasNextPage,
   } = useBreweryList({
-    take: 20,
+    take: 60,
     type: !!watch("type") ? watch("type") : undefined,
     name: useDebouncedValue(watch("name"), 200),
     region: useDebouncedValue(watch("region"), 200),

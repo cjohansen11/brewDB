@@ -37,8 +37,11 @@ export default function Brewery() {
         brewery.state ?? brewery.county_province
       } ${brewery.postal_code?.split("-")[0]}`}</div>
       <GoogleMap
-        lat={+brewery.latitude}
-        lng={+brewery.longitude}
+        latLng={
+          brewery.latitude && brewery.longitude
+            ? { lat: +brewery.latitude, lng: +brewery.longitude }
+            : undefined
+        }
         name={brewery.name}
       />
     </div>

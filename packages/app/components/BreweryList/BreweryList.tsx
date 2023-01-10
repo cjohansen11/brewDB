@@ -8,17 +8,21 @@ export type BreweryListProps = {
 };
 
 export default function BreweryList({ breweries }: BreweryListProps) {
+  const { pages } = breweries;
+
   return (
     <div className="flex flex-wrap justify-center">
-      {breweries.pages.map((page, idx) => (
-        <Fragment key={idx}>
-          {page.length > 0 ? (
-            page.map((brewery) => <BreweryCard key={brewery.id} {...brewery} />)
-          ) : (
-            <NotFound />
-          )}
-        </Fragment>
-      ))}
+      {pages.length > 0 && pages[0] && pages[0].length > 0 ? (
+        breweries.pages.map((page, idx) => (
+          <Fragment key={idx}>
+            {page.map((brewery) => (
+              <BreweryCard key={brewery.id} {...brewery} />
+            ))}
+          </Fragment>
+        ))
+      ) : (
+        <NotFound />
+      )}
     </div>
   );
 }
