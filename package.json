@@ -17,7 +17,8 @@
     "prisma:deploy": "prisma migrate dev --schema ./packages/prisma/schema.prisma",
     "prisma:migrate:reset": "yarn workspace prisma migrate:reset",
     "prisma:db:seed": "yarn workspace prisma db:seed",
-    "dev": "cd apps/next-app && yarn next"
+    "dev": "cd apps/next-app && yarn next",
+    "api:pm2": "yarn workspace api pm2"
   },
   "devDependencies": {
     "typescript": "^4.9.4"

@@ -1,7 +1,7 @@
 import { useEffect, useState, MutableRefObject } from "react";
 
 export type UseInifiteScrollProps = {
-  callback: () => void;
+  callback: () => Promise<void>;
   offsetHeight: number;
   hasNextPage: boolean;
 };
